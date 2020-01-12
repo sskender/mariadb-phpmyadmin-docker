@@ -1,0 +1,43 @@
+version: '3.3'
+
+
+services:
+
+    mariadb:
+        container_name: mariadb
+        build:
+            context: ./mariadb
+            dockerfile: Dockerfile
+        environment:
+            - MYSQL_ROOT_PASSWORD=rootpassword
+        env_file:
+            - mariadb.env
+        networks:
+            - intranet
+        ports:
+            - "3306:3306"
+        restart: always
+        volumes:
+            - mariadb:/var/lib/mysql
+
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on:
+            - mariadb
+        environment:
+            - PMA_HOST=mariadb
+        image: "phpmyadmin/phpmyadmin"
+        networks:
+            - intranet
+        ports:
+            - "8080:80"
+        restart: always
+
+
+networks:
+    intranet:
+        driver: bridge
+
+
+volumes:
+    mariadb:
