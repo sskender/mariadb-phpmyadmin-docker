@@ -8,17 +8,15 @@ services:
         build:
             context: ./mariadb
             dockerfile: Dockerfile
-        environment:
-            - MYSQL_ROOT_PASSWORD=rootpassword
         env_file:
-            - mariadb.env
+            - ".env"
         networks:
             - intranet
         ports:
             - "3306:3306"
         restart: always
         volumes:
-            - mariadb:/var/lib/mysql
+            - db_data:/var/lib/mysql
 
     phpmyadmin:
         container_name: phpmyadmin
@@ -40,4 +38,4 @@ networks:
 
 
 volumes:
-    mariadb:
+    db_data:
