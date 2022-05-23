@@ -1,1 +1,2 @@
-mariadb/restore/*
+restore/*
+.DS_Store

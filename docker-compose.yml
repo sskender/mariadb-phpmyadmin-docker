@@ -1,13 +1,9 @@
 version: '3.3'
 
-
 services:
-
     mariadb:
         container_name: mariadb
-        build:
-            context: ./mariadb
-            dockerfile: Dockerfile
+        image: mariadb:latest
         env_file:
             - ".env"
         networks:
@@ -16,26 +12,24 @@ services:
             - "3306:3306"
         restart: always
         volumes:
+            - ./restore:/docker-entrypoint-initdb.d:ro
             - db_data:/var/lib/mysql
-
     phpmyadmin:
         container_name: phpmyadmin
         depends_on:
             - mariadb
         environment:
             - PMA_HOST=mariadb
-        image: "phpmyadmin/phpmyadmin"
+        image: phpmyadmin/phpmyadmin:latest
         networks:
             - intranet
         ports:
             - "8080:80"
         restart: always
 
-
 networks:
     intranet:
         driver: bridge
-
 
 volumes:
     db_data:
