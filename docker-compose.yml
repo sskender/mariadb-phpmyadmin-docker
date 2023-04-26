@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.6'
 
 services:
     mariadb:
@@ -10,10 +10,10 @@ services:
             - intranet
         ports:
             - "3306:3306"
-        restart: always
         volumes:
             - ./restore:/docker-entrypoint-initdb.d:ro
             - db_data:/var/lib/mysql
+
     phpmyadmin:
         container_name: phpmyadmin
         depends_on:
@@ -25,7 +25,6 @@ services:
             - intranet
         ports:
             - "8080:80"
-        restart: always
 
 networks:
     intranet:
