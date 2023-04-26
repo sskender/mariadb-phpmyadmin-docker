@@ -1,9 +1,9 @@
-version: '3.6'
+version: "3.6"
 
 services:
     mariadb:
         container_name: mariadb
-        image: mariadb:latest
+        image: mariadb:10.6.10
         env_file:
             - ".env"
         networks:
